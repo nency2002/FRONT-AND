@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product</title>
+</head>
+
+<style>
+   #box2{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+#box2 div{
+    width: 300px;
+
+}
+#box2 div img{
+    width: 200px;
+    height: 200px;
+}
+
+</style>
+
+<body>
+    <form action="http://localhost:8090/product/create" method="post">
+        <input type="text" placeholder="title" name="title">
+        <input type="number" placeholder="price" name="price">
+        <input type="url" placeholder="img" name="img">
+        <input type="text" placeholder="category" name="category">
+        <input type="submit">
+    </form>
+    <div id="box2"></div>
+</body>
+<script>
+    // const get = async () =>{
+    //     let res = await fetch("http://localhost:8090/product/products");
+    //     let data = await res.json();
+    //     console.log(data);
+    // }
+    // get();
+    let products = [];
+
+    const display = (data) => {
+        data.map((products) => {
+
+            let title = document.createElement('h2');
+            title.innerHTML = products.title;
+            let price = document.createElement('p');
+            price.innerHTML = products.price;
+            let img = document.createElement('img');
+            img.src = products.img;
+            let category = document.createElement('p');
+            category.innerHTML = products.category;
+            let div = document.createElement('div');
+
+            div.append(title, price, img, category,)
+            document.getElementById("box2").append(div)
+        })
+    }
+    const get = () => {
+        fetch("http://localhost:8090/product/products")
+            .then((response) => response.json())
+            .then((response) => {
+                display(response);
+                products = response;
+                console.log(products)
+            })
+    }
+    get()
+</script>
+
+</html>
